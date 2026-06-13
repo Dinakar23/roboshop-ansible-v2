@@ -1,0 +1,12 @@
+ansible_user : ec2-user
+ansible_password : DevOps321
+
+MONGODB_HOST : mongodb.dinakardevops.online
+REDIS_HOST : redis.dinakardevops.online
+CATALOGUE_HOST : catalogue.dinakardevops.online
+MYSQL_HOST : mysql.dinakardevops.online
+CART_HOST : cart.dinakardevops.online
+USER_HOST : user.dinakardevops.online
+RABBITMQ_HOST : rabbitmq.dinakardevops.online
+SHIPPING_HOST : shipping.dinakardevops.online
+PAYMENT_HOST : payment.dinakardevops.online
