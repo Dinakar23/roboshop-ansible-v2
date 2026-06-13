@@ -1,0 +1,89 @@
+- name : Enable required module
+  command : dnf module enable nodejs:20 -y
+
+- name : install nodejs 20
+  package :
+    name : nodejs
+    state : present
+    
+- name : create roboshop system user
+  user :
+    name : roboshop
+    system : true 
+    home : /app
+    shell: /sbin/nologin
+    comment: "roboshop system user"
+
+- name : remove app directory
+  file :
+    path: /app
+    state: absent
+
+- name : Delete catalogue.zip file in the tmp directory
+  file :
+    path: /tmp/catalogue.zip
+    state: absent
+
+- name : create app directory
+  file :
+    path: /app
+    state: directory
+
+- name : Download catalogue 
+  get_url:
+      url:  https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+      dest: /tmp/catalogue.zip
+
+- name : unzip catalogue
+  unarchive:
+    src : /tmp/catalogue.zip
+    dest : /app
+    remote_src: yes
+
+- name: Install dependencies
+  community.general.npm:
+    path: /app
+
+- name : copy catalogue.service
+  template :
+    src: catalogue.service.j2
+    dest: /etc/systemd/system/catalogue.service
+
+- name : copy mongo repo
+  copy:
+    src : mongo.repo
+    dest : /etc/yum.repos.d/mongo.repo
+    
+- name : install mangodb client
+  package :
+    name : mongodb-mongosh
+    state : present
+
+- name : Check catalogue schema exist or not
+  shell : mongosh --host "{{ MONGODB_HOST }}" --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+  register : catalogue_output
+  tags :
+  - mongodb
+
+- name : print catalogue output
+  debug : 
+    msg : "{{ catalogue_output }}"
+  tags :
+  - mongodb
+
+- name : Load Products
+  shell : mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+  when : catalogue_output.stdout | int < 0
+  tags :
+  - mongodb
+
+- name : daemon reload
+  ansible.builtin.systemd_service:
+    name : catalogue
+    daemon_reload : true
+
+- name : Start and enable catalogue
+  service :
+    name : catalogue
+    state : restarted
+    enabled : yes
