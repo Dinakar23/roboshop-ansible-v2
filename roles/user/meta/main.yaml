@@ -1,0 +1,3 @@
+dependencies:
+# catalogue is depends on common , so common role main.yaml will be executed
+- name : common
