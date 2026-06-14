@@ -3,17 +3,17 @@
     name : common
     tasks_from : app-setup.yaml
 
-- name : nodejs setup
+- name : java setup
   import_role :
     name : common
-    tasks_from : nodejs.yaml
-
+    tasks_from : java.yaml
+  
 - name : systemd setup
   import_role :
     name : common
     tasks_from : systemd-setup.yaml
 
-- name : restart
-  import_role :
-    name : common
-    tasks_from : restart.yaml 
+- name : install mysql
+  package :
+    name : mysql
+    state : present
