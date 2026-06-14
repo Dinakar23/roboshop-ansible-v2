@@ -1,4 +1,8 @@
 - name : demo on role
   debug :
     msg : " Hi i'm from demo role tasks"
-  
+
+# it should load another role called common
+- name : import common role
+  import_role :
+    name : common
