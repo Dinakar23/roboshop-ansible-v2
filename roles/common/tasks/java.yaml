@@ -1,6 +1,6 @@
 - name : Install maven
   package :
-    name : "{{ item }}"
+    name : maven
     state : present
 
 - name: Install dependencies
