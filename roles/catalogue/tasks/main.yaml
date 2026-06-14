@@ -18,7 +18,8 @@
   copy:
     src : mongo.repo
     dest : /etc/yum.repos.d/mongo.repo
-    remote_src : yes
+    remote_src : no
+    
     
 - name : install mangodb client
   package :
