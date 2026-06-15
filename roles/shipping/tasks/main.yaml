@@ -15,11 +15,13 @@
 
 - name : install mysql
   package :
-    name : "{{ item }}"
+    name : mysql
     state : present
-  loop :
-  - mysql
-  - PyMySQL
+
+- name : Install PyMySQL
+  pip:
+    name: PyMySQL
+    executable: pip3.9
 
 - name : Load mysql data
   community.mysql.mysql_db:
