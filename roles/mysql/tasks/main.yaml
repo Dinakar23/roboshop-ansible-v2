@@ -1,6 +1,6 @@
 - name: Lookup secretsmanager secret in the current region
   debug: 
-    msg: "{{ lookup('amazon.aws.aws_secret', 'roboshor/mysql_root_password', bypath=true , region='us-east-1') | from_json }}"
+    msg: "{{ lookup('amazon.aws.aws_secret', 'roboshor/mysql_root_password', bypath=true , region='us-east-1')  }}"
 
 - name : installing mysql server
   package :
