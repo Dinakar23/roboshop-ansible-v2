@@ -2,9 +2,9 @@
   debug: 
     msg: "{{ lookup('amazon.aws.aws_secret', 'roboshop/mysql_root_password', region='us-east-1') | from_json   }}"
 
-- name : password checking
-  debug :
-    msg : "{{ root_password.mysql_root_password }}"
+- name: password checking
+  debug:
+    msg: "{{ root_password['mysql_root_password'] }}"
 
 - name : installing mysql server
   package :
