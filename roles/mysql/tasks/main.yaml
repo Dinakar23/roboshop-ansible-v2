@@ -1,6 +1,6 @@
 - name: Lookup secretsmanager secret in the current region
   debug: 
-    msg: "{{ lookup('amazon.aws.aws_secret', 'roboshop/mysql_root_password', region='us-east-1') | from_json  }}"
+    msg: "{{ lookup('amazon.aws.aws_secret', 'roboshop/mysql_root_password', region='us-east-1')   }}"
 
 - name : password checking
   debug :
