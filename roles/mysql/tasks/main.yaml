@@ -18,4 +18,4 @@
     enabled : yes
 
 - name : setup root password
-  command : mysql_secure_installation --set-root-pass "{{ MY_SQL_ROOT_PASSWORD }}"
+  command : mysql_secure_installation --set-root-pass "{{ root_password.mysql_root_password }}"
